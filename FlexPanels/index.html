@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>flex panels</title>
+</head>
+<body>
+    <style>
+         html {
+      box-sizing: border-box;
+      background: #ffc600;
+      font-family: 'helvetica neue';
+      font-size: 20px;
+      font-weight: 150;
+    }
+
+    body {
+      margin: 0;
+    }
+
+    *, *:before, *:after {
+      box-sizing: inherit;
+    }
+
+    .panels {
+      min-height: 100vh;
+      overflow: hidden;
+      display: flex;
+    }
+
+    .panel {
+      background: #6B0F9C;
+      box-shadow: inset 0 0 0 5px rgba(255,255,255,0.1);
+      color: white;
+      text-align: center;
+      /* Safari transitionend event.propertyName === flex */
+      /* Chrome + FF transitionend event.propertyName === flex-grow */
+      transition:
+        font-size 0.7s cubic-bezier(0.61,-0.19, 0.7,-0.11),
+        flex 0.7s cubic-bezier(0.61,-0.19, 0.7,-0.11), background 0.2s;
+      font-size: 15px;
+      background-size: cover;
+      background-position: center;
+      flex: 1 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .panel-1 { background-image:url('./1303466.jpeg'); }
+    .panel-2 { background-image:url('./520479.jpg'); }
+    .panel-3 { background-image:url('./one-piece-anime-monkey-d-luffy-wallpaper-preview.jpg'); }
+    .panel-4 { background-image:url('./5551804.jpg'); }
+    .panel-5 { background-image:url('./17267164.jpg'); }
+
+    /* Flex Children */
+    .panel > * {
+      margin: 0;
+      width: 100%;
+      transition: transform 0.5s;
+      border: 1px solid red;
+      flex: 1 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .panel > *:first-child{transform: translateY(-100%);}
+    .panel.open-active > *:first-child{transform: translateY(0);}
+    .panel > *:last-child{transform: translateY(100%);}
+    .panel.open-active > *:last-child{transform: translateY(0);}
+
+    .panel p {
+      text-transform: uppercase;
+      font-family: 'Amatic SC', cursive;
+      text-shadow: 0 0 4px rgba(0, 0, 0, 0.72), 0 0 14px rgba(0, 0, 0, 0.45);
+      font-size: 2em;
+    }
+
+    .panel p:nth-child(2) {
+      font-size: 3em;
+    }
+
+    .panel.open {
+      font-size: 30px;
+      flex: 4;
+    }
+
+
+    </style>
+
+    <div class="panels">
+        <div class="panel panel-1">
+            <p>Sniper</p>
+            <p>Usopp</p>
+            <p>The Liar!</p>
+        </div>
+        <div class="panel panel-2">
+            <p>Navigator</p>
+            <p>Nami</p>
+            <p>Clima Tact!</p>
+        </div>
+        <div class="panel panel-3">
+            <p>Captain</p>
+            <p>Luffy</p>
+            <p>King of the pirates</p>
+        </div>
+        <div class="panel panel-4">
+            <p>Swordsman</p>
+            <p>Zoro</p>
+            <p>3-swords style</p>
+        </div>
+        <div class="panel panel-5">
+            <p>Chef</p>
+            <p>Sanji</p>
+            <p>All Blue</p>
+        </div>
+    </div>
+
+    <script>
+      const panels = document.querySelectorAll('.panel');
+
+      function toggleOpen(){
+        this.classList.toggle('open')
+      }
+
+      function toggleActive(e){
+        if(e.propertyName.includes('flex-grow'))
+        {
+        this.classList.toggle('open-active')
+        }
+      }
+      panels.forEach(panel=> panel.addEventListener('click',toggleOpen));
+      panels.forEach(panel=> panel.addEventListener('transitionend',toggleActive));
+    </script>
+</body>
+</html>
